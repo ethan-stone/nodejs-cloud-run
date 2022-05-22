@@ -10,6 +10,20 @@ paths:
       responses:
         '200':
           description: ''
+  /api/auth/login:
+    post:
+      operationId: AppController_login
+      parameters: []
+      responses:
+        '201':
+          description: ''
+  /api/profile:
+    get:
+      operationId: AppController_getProfile
+      parameters: []
+      responses:
+        '200':
+          description: ''
 info:
   title: API Gateway + Cloud Run
   description: Sample API on APIGateway with a Cloud Run backend
