@@ -1,0 +1,21 @@
+paths:
+  /api:
+    get:
+      operationId: AppController_getHello
+      x-google-backend:
+        address: ${api_backend}
+        path_translation:
+          - APPEND_PATH_TO_ADDRESS
+      parameters: []
+      responses:
+        '200':
+          description: ''
+info:
+  title: API Gateway + Cloud Run
+  description: Sample API on APIGateway with a Cloud Run backend
+  version: 1.0.0
+  contact: {}
+tags: []
+swagger: '2.0'
+definitions: {}
+x-components: {}
