@@ -1,5 +1,5 @@
 paths:
-  /api:
+  /v1:
     get:
       operationId: AppController_getHello
       x-google-backend:
@@ -10,16 +10,34 @@ paths:
       responses:
         '200':
           description: ''
-  /api/auth/login:
+  /v1/auth/login:
     post:
-      operationId: AppController_login
+      operationId: AuthController_login
       parameters: []
       responses:
         '201':
           description: ''
-  /api/profile:
+  /v1/auth/refresh:
+    post:
+      operationId: AuthController_refreshTokens
+      parameters: []
+      responses:
+        '201':
+          description: ''
+  /v1/users/{id}:
     get:
-      operationId: AppController_getProfile
+      operationId: UsersController_getUser
+      parameters:
+        - name: id
+          required: true
+          in: path
+          type: string
+      responses:
+        '200':
+          description: ''
+  /v1/users:
+    get:
+      operationId: UsersController_listUsers
       parameters: []
       responses:
         '200':
