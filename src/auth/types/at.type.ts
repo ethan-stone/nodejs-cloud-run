@@ -1,3 +1,3 @@
 export type AccessToken = {
-  sub: number;
+  sub: string;
 };

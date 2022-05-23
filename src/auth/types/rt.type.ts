@@ -1,4 +1,4 @@
 export type RefreshToken = {
-  sub: number;
-  version: number;
+  sub: string;
+  tokenVersion: number;
 };

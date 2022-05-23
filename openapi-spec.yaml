@@ -10,6 +10,20 @@ paths:
       responses:
         '200':
           description: ''
+  /v1/auth/signup:
+    post:
+      operationId: AuthController_signup
+      parameters:
+        - required: true
+          name: body
+          in: body
+          schema:
+            $ref: '#/definitions/SignupArgsDto'
+      responses:
+        '201':
+          description: ''
+      consumes:
+        - application/json
   /v1/auth/login:
     post:
       operationId: AuthController_login
@@ -24,6 +38,26 @@ paths:
       responses:
         '201':
           description: ''
+  /v1/users:
+    post:
+      operationId: UsersController_createUser
+      parameters:
+        - required: true
+          name: body
+          in: body
+          schema:
+            $ref: '#/definitions/CreateUserDto'
+      responses:
+        '201':
+          description: ''
+      consumes:
+        - application/json
+    get:
+      operationId: UsersController_listUsers
+      parameters: []
+      responses:
+        '200':
+          description: ''
   /v1/users/{id}:
     get:
       operationId: UsersController_getUser
@@ -35,13 +69,6 @@ paths:
       responses:
         '200':
           description: ''
-  /v1/users:
-    get:
-      operationId: UsersController_listUsers
-      parameters: []
-      responses:
-        '200':
-          description: ''
 info:
   title: API Gateway + Cloud Run
   description: Sample API on APIGateway with a Cloud Run backend
@@ -49,5 +76,11 @@ info:
   contact: {}
 tags: []
 swagger: '2.0'
-definitions: {}
+definitions:
+  SignupArgsDto:
+    type: object
+    properties: {}
+  CreateUserDto:
+    type: object
+    properties: {}
 x-components: {}

@@ -1,13 +1,13 @@
 import { Exclude } from 'class-transformer';
-import { UserWithPassword } from '../types';
+import { User } from '../types';
 
 export class UserEntity {
-  id: UserWithPassword['id'];
-  username: UserWithPassword['username'];
-  tokenVersion: UserWithPassword['tokenVersion'];
+  id: User['id'];
+  username: User['username'];
+  tokenVersion: User['tokenVersion'];
 
   @Exclude()
-  password: UserWithPassword['password'];
+  password: User['password'];
 
   constructor(partial: Partial<UserEntity>) {
     Object.assign(this, partial);

@@ -1,5 +1,3 @@
-export type User = {
-  id: number;
-  username: string;
-  tokenVersion: number;
-};
+import { User as PrismaUser } from '@prisma/client';
+
+export type User = PrismaUser;
