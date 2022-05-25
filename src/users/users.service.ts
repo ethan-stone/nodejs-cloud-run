@@ -18,4 +18,8 @@ export class UsersService {
   async findMany(args: Prisma.UserFindManyArgs): Promise<User[]> {
     return this.prisma.user.findMany(args);
   }
+
+  async update(args: Prisma.UserUpdateArgs): Promise<User> {
+    return this.prisma.user.update(args);
+  }
 }

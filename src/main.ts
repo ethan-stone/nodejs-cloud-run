@@ -3,6 +3,7 @@ import { AppModule } from './app.module';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import * as fs from 'fs';
 import * as yaml from 'js-yaml';
+import * as cookieParser from 'cookie-parser';
 import { convert } from 'api-spec-converter';
 
 async function bootstrap() {
@@ -31,6 +32,8 @@ async function bootstrap() {
 
     fs.writeFileSync('./openapi-spec.yaml', yamlStr);
   }
+
+  app.use(cookieParser());
 
   await app.listen(8080);
 

@@ -24,7 +24,7 @@ paths:
           description: ''
       consumes:
         - application/json
-  /v1/auth/login:
+  /v1/auth/signin:
     post:
       operationId: AuthController_login
       parameters: []
@@ -37,6 +37,13 @@ paths:
       parameters: []
       responses:
         '201':
+          description: ''
+  /v1/auth/signout:
+    post:
+      operationId: AuthController_signout
+      parameters: []
+      responses:
+        '200':
           description: ''
   /v1/users:
     post:

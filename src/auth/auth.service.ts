@@ -20,13 +20,15 @@ export class AuthService {
         username,
       },
     });
+
     if (!user) return null;
 
-    const isValid = argon2.verify(user.password, pass);
+    const isValid = await argon2.verify(user.password, pass);
 
     if (isValid) {
       return user;
     }
+
     return null;
   }
 
@@ -46,7 +48,7 @@ export class AuthService {
     );
   }
 
-  async login(user: User): Promise<Tokens> {
+  async signin(user: User): Promise<Tokens> {
     return this.getTokens(
       { sub: user.id },
       { sub: user.id, tokenVersion: user.tokenVersion },
@@ -64,6 +66,19 @@ export class AuthService {
       { sub: user.id },
       { sub: user.id, tokenVersion: user.tokenVersion },
     );
+  }
+
+  async signout(userId: string): Promise<void> {
+    await this.usersService.update({
+      where: {
+        id: userId,
+      },
+      data: {
+        tokenVersion: {
+          increment: 1,
+        },
+      },
+    });
   }
 
   async getTokens(

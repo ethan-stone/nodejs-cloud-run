@@ -1,10 +1,22 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  HttpCode,
+  Post,
+  Response,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { LocalAuthGuard, RtGuard } from './guards';
+import { AtGuard, LocalAuthGuard, RtGuard } from './guards';
 import { RefreshToken, Tokens } from './types';
-import { GetFromUser, GetFromRtPayload } from '../common/decorators';
+import {
+  GetFromUser,
+  GetFromRtPayload,
+  GetFromAtPayload,
+} from '../common/decorators';
 import { User } from '../users/types';
 import { SignupArgsDto } from './dto';
+import { Response as ExpressResponse } from 'express';
 
 @Controller('auth')
 export class AuthController {
@@ -15,10 +27,21 @@ export class AuthController {
   }
 
   @UseGuards(LocalAuthGuard)
-  @Post('/login')
-  async login(@GetFromUser() user: User): Promise<Tokens> {
+  @Post('/signin')
+  async login(
+    @GetFromUser() user: User,
+    @Response() res: ExpressResponse,
+  ): Promise<void> {
     console.log(`login: ${JSON.stringify(user)}`);
-    return this.authService.login(user);
+    const tokens = await this.authService.signin(user);
+
+    res.cookie('jid', tokens.refresh_token, {
+      httpOnly: true,
+    });
+
+    res.send({
+      access_token: tokens.access_token,
+    });
   }
 
   @UseGuards(RtGuard)
@@ -26,8 +49,24 @@ export class AuthController {
   async refreshTokens(
     @GetFromRtPayload('sub') sub: string,
     @GetFromRtPayload() refreshToken: RefreshToken,
-  ): Promise<Tokens> {
+    @Response() res: ExpressResponse,
+  ): Promise<void> {
+    const tokens = await this.authService.refreshTokens(sub);
     console.log(`refresh: ${JSON.stringify(refreshToken)}`);
-    return this.authService.refreshTokens(sub);
+
+    res.cookie('jid', tokens.refresh_token, {
+      httpOnly: true,
+    });
+
+    res.send({
+      access_token: tokens.access_token,
+    });
+  }
+
+  @UseGuards(AtGuard)
+  @HttpCode(200)
+  @Post('/signout')
+  async signout(@GetFromAtPayload('sub') sub: string): Promise<void> {
+    await this.authService.signout(sub);
   }
 }
