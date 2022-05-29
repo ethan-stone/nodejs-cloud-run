@@ -41,3 +41,5 @@ terraform.tfstate.backup
 .terraform
 
 .env
+
+firebase-admin.json

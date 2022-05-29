@@ -1,8 +1,10 @@
 import {
   Body,
   Controller,
+  Get,
   HttpCode,
   Post,
+  Req,
   Response,
   UseGuards,
 } from '@nestjs/common';
@@ -17,17 +19,18 @@ import {
 import { User } from '../users/types';
 import { SignupArgsDto } from './dto';
 import { Response as ExpressResponse } from 'express';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('auth')
 export class AuthController {
   constructor(private authService: AuthService) {}
-  @Post('/signup')
+  @Post('signup')
   async signup(@Body() signupArgs: SignupArgsDto): Promise<Tokens> {
     return this.authService.signup(signupArgs);
   }
 
   @UseGuards(LocalAuthGuard)
-  @Post('/signin')
+  @Post('signin')
   async login(
     @GetFromUser() user: User,
     @Response() res: ExpressResponse,
@@ -45,7 +48,7 @@ export class AuthController {
   }
 
   @UseGuards(RtGuard)
-  @Post('/refresh')
+  @Post('refresh')
   async refreshTokens(
     @GetFromRtPayload('sub') sub: string,
     @GetFromRtPayload() refreshToken: RefreshToken,
@@ -65,8 +68,18 @@ export class AuthController {
 
   @UseGuards(AtGuard)
   @HttpCode(200)
-  @Post('/signout')
+  @Post('signout')
   async signout(@GetFromAtPayload('sub') sub: string): Promise<void> {
     await this.authService.signout(sub);
+  }
+
+  @UseGuards(AuthGuard('google-oauth20'))
+  @Get('signin/google')
+  async signinWithGoogle(@Req() req) {}
+
+  @UseGuards(AuthGuard('google-oauth20'))
+  @Get('google/callback')
+  async googleAuthRedirect(@Req() req) {
+    return this.authService.loginWithGoogle(req);
   }
 }

@@ -6,12 +6,19 @@ import { UsersModule } from 'src/users/users.module';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { AtStrategy } from './strategies/at.strategy';
+import { GoogleStrategy } from './strategies/google.strategy';
 import { LocalStrategy } from './strategies/local.strategy';
 import { RtStrategy } from './strategies/rt.strategy';
 
 @Module({
   imports: [UsersModule, PassportModule, ConfigModule, JwtModule.register({})],
-  providers: [AuthService, LocalStrategy, AtStrategy, RtStrategy],
+  providers: [
+    AuthService,
+    LocalStrategy,
+    AtStrategy,
+    RtStrategy,
+    GoogleStrategy,
+  ],
   controllers: [AuthController],
   exports: [AuthService],
 })

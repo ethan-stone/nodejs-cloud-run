@@ -101,4 +101,15 @@ export class AuthService {
       refresh_token: rt,
     };
   }
+
+  async loginWithGoogle(req) {
+    if (!req.user) {
+      return 'no user from google';
+    }
+
+    return {
+      message: 'User Info from Google',
+      user: req.user,
+    };
+  }
 }

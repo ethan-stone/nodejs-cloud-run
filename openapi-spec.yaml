@@ -45,6 +45,20 @@ paths:
       responses:
         '200':
           description: ''
+  /v1/auth/signin/google:
+    get:
+      operationId: AuthController_signinWithGoogle
+      parameters: []
+      responses:
+        '200':
+          description: ''
+  /v1/auth/google/callback:
+    get:
+      operationId: AuthController_googleAuthRedirect
+      parameters: []
+      responses:
+        '200':
+          description: ''
   /v1/users:
     post:
       operationId: UsersController_createUser
