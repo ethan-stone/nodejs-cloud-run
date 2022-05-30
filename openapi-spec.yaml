@@ -10,6 +10,13 @@ paths:
       responses:
         '200':
           description: ''
+  /v1/test:
+    get:
+      operationId: AppController_getTest
+      parameters: []
+      responses:
+        '200':
+          description: ''
   /v1/auth/signup:
     post:
       operationId: AuthController_signup

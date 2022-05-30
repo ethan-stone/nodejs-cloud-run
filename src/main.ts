@@ -5,6 +5,7 @@ import * as fs from 'fs';
 import * as yaml from 'js-yaml';
 import * as cookieParser from 'cookie-parser';
 import { convert } from 'api-spec-converter';
+import { SupertokensExceptionFilter } from './auth/auth.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -34,6 +35,7 @@ async function bootstrap() {
   }
 
   app.use(cookieParser());
+  app.useGlobalFilters(new SupertokensExceptionFilter());
 
   await app.listen(8080);
 

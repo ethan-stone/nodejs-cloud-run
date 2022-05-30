@@ -1,7 +1,9 @@
 import { Controller, Get, UseGuards } from '@nestjs/common';
 import { ApiExtension } from '@nestjs/swagger';
+import { SessionContainer } from 'supertokens-node/recipe/session';
 import { AppService } from './app.service';
-import { AtGuard } from './auth/guards';
+import { AtGuard, SuperTokensGuard } from './auth/guards';
+import { Session } from './common/decorators';
 
 @Controller()
 export class AppController {
@@ -15,5 +17,12 @@ export class AppController {
   @Get()
   getHello(): string {
     return this.appService.getHello();
+  }
+
+  @UseGuards(SuperTokensGuard)
+  @Get('test')
+  async getTest(@Session() session: SessionContainer): Promise<string> {
+    console.log(session);
+    return 'magic';
   }
 }
