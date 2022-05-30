@@ -1,5 +1,5 @@
 paths:
-  /v1:
+  /:
     get:
       operationId: AppController_getHello
       x-google-backend:
@@ -10,14 +10,14 @@ paths:
       responses:
         '200':
           description: ''
-  /v1/test:
+  /test:
     get:
       operationId: AppController_getTest
       parameters: []
       responses:
         '200':
           description: ''
-  /v1/auth/signup:
+  /auth/signup:
     post:
       operationId: AuthController_signup
       parameters:
@@ -31,42 +31,42 @@ paths:
           description: ''
       consumes:
         - application/json
-  /v1/auth/signin:
+  /auth/signin:
     post:
       operationId: AuthController_login
       parameters: []
       responses:
         '201':
           description: ''
-  /v1/auth/refresh:
+  /auth/refresh:
     post:
       operationId: AuthController_refreshTokens
       parameters: []
       responses:
         '201':
           description: ''
-  /v1/auth/signout:
+  /auth/signout:
     post:
       operationId: AuthController_signout
       parameters: []
       responses:
         '200':
           description: ''
-  /v1/auth/signin/google:
+  /auth/signin/google:
     get:
       operationId: AuthController_signinWithGoogle
       parameters: []
       responses:
         '200':
           description: ''
-  /v1/auth/google/callback:
+  /auth/google/callback:
     get:
       operationId: AuthController_googleAuthRedirect
       parameters: []
       responses:
         '200':
           description: ''
-  /v1/users:
+  /users:
     post:
       operationId: UsersController_createUser
       parameters:
@@ -86,7 +86,7 @@ paths:
       responses:
         '200':
           description: ''
-  /v1/users/{id}:
+  /users/{id}:
     get:
       operationId: UsersController_getUser
       parameters:

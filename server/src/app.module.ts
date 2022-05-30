@@ -16,7 +16,7 @@ import { UsersModule } from './users/users.module';
         appName: 'nodejs-cloud-run',
         apiDomain: 'http://localhost:8080',
         websiteDomain: 'http://localhost:3000',
-        apiBasePath: '/auth',
+        apiBasePath: '/v1/auth',
         websiteBasePath: '/auth',
       },
     }),

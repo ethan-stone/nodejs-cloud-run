@@ -5,12 +5,11 @@ import * as fs from 'fs';
 import * as yaml from 'js-yaml';
 import * as cookieParser from 'cookie-parser';
 import { convert } from 'api-spec-converter';
+import supertokens from 'supertokens-node';
 import { SupertokensExceptionFilter } from './auth/auth.filter';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-
-  app.setGlobalPrefix('v1');
 
   if (process.env.NODE_ENV === 'development') {
     const config = new DocumentBuilder()
@@ -34,8 +33,14 @@ async function bootstrap() {
     fs.writeFileSync('./openapi-spec.yaml', yamlStr);
   }
 
+  app.setGlobalPrefix('v1');
   app.use(cookieParser());
   app.useGlobalFilters(new SupertokensExceptionFilter());
+  app.enableCors({
+    origin: ['http://localhost:3000'],
+    allowedHeaders: ['content-type', ...supertokens.getAllCORSHeaders()],
+    credentials: true,
+  });
 
   await app.listen(8080);
 
