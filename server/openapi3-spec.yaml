@@ -1,0 +1,114 @@
+openapi: 3.0.0
+paths:
+  /:
+    get:
+      operationId: AppController_getHello
+      x-google-backend:
+        address: ${api_backend}
+        path_translation:
+          - APPEND_PATH_TO_ADDRESS
+      parameters: []
+      responses:
+        '200':
+          description: ''
+  /test:
+    get:
+      operationId: AppController_getTest
+      parameters: []
+      responses:
+        '200':
+          description: ''
+  /auth/signup:
+    post:
+      operationId: AuthController_signup
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SignupArgsDto'
+      responses:
+        '201':
+          description: ''
+  /auth/signin:
+    post:
+      operationId: AuthController_login
+      parameters: []
+      responses:
+        '201':
+          description: ''
+  /auth/refresh:
+    post:
+      operationId: AuthController_refreshTokens
+      parameters: []
+      responses:
+        '201':
+          description: ''
+  /auth/signout:
+    post:
+      operationId: AuthController_signout
+      parameters: []
+      responses:
+        '200':
+          description: ''
+  /auth/signin/google:
+    get:
+      operationId: AuthController_signinWithGoogle
+      parameters: []
+      responses:
+        '200':
+          description: ''
+  /auth/google/callback:
+    get:
+      operationId: AuthController_googleAuthRedirect
+      parameters: []
+      responses:
+        '200':
+          description: ''
+  /users:
+    post:
+      operationId: UsersController_createUser
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateUserDto'
+      responses:
+        '201':
+          description: ''
+    get:
+      operationId: UsersController_listUsers
+      parameters: []
+      responses:
+        '200':
+          description: ''
+  /users/{id}:
+    get:
+      operationId: UsersController_getUser
+      parameters:
+        - name: id
+          required: true
+          in: path
+          schema:
+            type: string
+      responses:
+        '200':
+          description: ''
+info:
+  title: API Gateway + Cloud Run
+  description: Sample API on APIGateway with a Cloud Run backend
+  version: 1.0.0
+  contact: {}
+tags: []
+servers: []
+components:
+  schemas:
+    SignupArgsDto:
+      type: object
+      properties: {}
+    CreateUserDto:
+      type: object
+      properties: {}

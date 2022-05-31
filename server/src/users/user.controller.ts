@@ -18,7 +18,6 @@ export class UsersController {
   constructor(private userService: UsersService) {}
 
   @UseInterceptors(ClassSerializerInterceptor)
-  @UseGuards(AtGuard)
   @Post()
   async createUser(@Body() createUserDto: CreateUserDto): Promise<UserEntity> {
     const dbUser = await this.userService.create({

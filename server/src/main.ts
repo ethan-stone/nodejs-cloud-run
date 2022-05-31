@@ -18,19 +18,21 @@ async function bootstrap() {
       .setDescription('Sample API on APIGateway with a Cloud Run backend')
       .build();
 
-    const document = SwaggerModule.createDocument(app, config);
+    const openapi3 = SwaggerModule.createDocument(app, config);
 
-    SwaggerModule.setup('docs', app, document);
+    SwaggerModule.setup('docs', app, openapi3);
 
-    const convertedDocument = await convert({
+    const swagger2 = await convert({
       from: 'openapi_3',
       to: 'swagger_2',
-      source: document,
+      source: openapi3,
     });
 
-    const yamlStr = yaml.dump({ ...convertedDocument.spec });
+    const swagger2YamlStr = yaml.dump({ ...swagger2.spec });
+    const openapi3YamlStr = yaml.dump({ ...openapi3 });
 
-    fs.writeFileSync('./openapi-spec.yaml', yamlStr);
+    fs.writeFileSync('./swagger2-spec.yaml', swagger2YamlStr);
+    fs.writeFileSync('./openapi3-spec.yaml', openapi3YamlStr);
   }
 
   app.setGlobalPrefix('v1');

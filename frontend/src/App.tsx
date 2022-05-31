@@ -14,7 +14,7 @@ import Home from "./Home";
 SuperTokens.init({
   appInfo: {
     appName: "nodejs-cloud-run",
-    apiDomain: "http://localhost:8080",
+    apiDomain: "https://api-service-d6297ef-m2nntdyxma-uc.a.run.app",
     websiteDomain: "http://localhost:3000",
     apiBasePath: "/v1/auth",
     websiteBasePath: "/auth"

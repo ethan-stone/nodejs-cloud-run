@@ -1,0 +1,1 @@
+FROM us-central1-docker.pkg.dev/ethans-playground-350400/backend/supertokens-docker-postgresql

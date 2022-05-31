@@ -3,6 +3,7 @@ import {
   MiddlewareConsumer,
   Module,
   NestModule,
+  Provider,
 } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
@@ -15,7 +16,11 @@ import { AtStrategy } from './strategies/at.strategy';
 import { GoogleStrategy } from './strategies/google.strategy';
 import { LocalStrategy } from './strategies/local.strategy';
 import { RtStrategy } from './strategies/rt.strategy';
-import { AuthModuleConfig, ConfigInjectionToken } from './types/config.type';
+import {
+  AuthModuleConfig,
+  ConfigInjectionToken,
+  AuthModuleAsyncOptions,
+} from './types/config.type';
 import { SupertokensService } from './supertokens/supertokens.service';
 
 @Module({
@@ -34,6 +39,24 @@ import { SupertokensService } from './supertokens/supertokens.service';
 export class AuthModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
     consumer.apply(AuthMiddleware).forRoutes('*');
+  }
+
+  private static createAsyncProvider(
+    options: AuthModuleAsyncOptions,
+  ): Provider {
+    return {
+      provide: ConfigInjectionToken,
+      useFactory: options.useFactory,
+      inject: options.inject || [],
+    };
+  }
+
+  static forRootAsync(options: AuthModuleAsyncOptions): DynamicModule {
+    return {
+      module: AuthModule,
+      imports: options.imports,
+      providers: [this.createAsyncProvider(options)],
+    };
   }
 
   static forRoot({
